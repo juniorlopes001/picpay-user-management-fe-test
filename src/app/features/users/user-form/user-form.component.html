@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form">
+    <h3>{{ user ? 'Editar Usuário' : 'Novo Usuário' }}</h3>
+
+    <div class="form-group">
+        <label for="name">Nome</label>
+        <input id="name" type="text" formControlName="name" />
+        <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="error">
+            Nome é obrigatório.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+        <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error">
+            <span *ngIf="form.get('email')?.errors?.['required']">Email é obrigatório.</span>
+            <span *ngIf="form.get('email')?.errors?.['email']">Email inválido.</span>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button type="button" (click)="cancel.emit()">Cancelar</button>
+        <button type="submit" [disabled]="form.invalid">Salvar</button>
+    </div>
+</form>

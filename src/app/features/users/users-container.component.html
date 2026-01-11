@@ -1,0 +1,15 @@
+<div class="users-container">
+    <header>
+        <h1>Gerenciamento de Usuários</h1>
+        <button (click)="openCreateForm()" class="btn-primary" *ngIf="!showForm">Novo Usuário</button>
+    </header>
+
+    <div class="search-bar" *ngIf="!showForm">
+        <input type="text" [formControl]="searchControl" placeholder="Buscar usuários por nome..." />
+    </div>
+
+    <app-user-form *ngIf="showForm" [user]="selectedUser" (save)="onSave($event)" (cancel)="onCancel()"></app-user-form>
+
+    <app-users-list *ngIf="!showForm" [users]="(users$ | async) || []" (edit)="onEdit($event)"
+        (delete)="onDelete($event)"></app-users-list>
+</div>

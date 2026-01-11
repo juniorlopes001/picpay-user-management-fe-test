@@ -1,0 +1,24 @@
+<div class="user-list">
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; trackBy: trackByFn">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <button (click)="edit.emit(user)" aria-label="Editar usuário">Editar</button>
+                    <button (click)="delete.emit(user.id)" aria-label="Excluir usuário" class="danger">Excluir</button>
+                </td>
+            </tr>
+            <tr *ngIf="users.length === 0">
+                <td colspan="3" class="no-data">Nenhum usuário encontrado.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
