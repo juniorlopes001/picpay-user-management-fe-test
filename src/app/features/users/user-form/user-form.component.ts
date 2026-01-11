@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 import { IUser } from '@app/core/models/user.model';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule],
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
@@ -20,7 +22,8 @@ export class UserFormComponent implements OnChanges {
   form: FormGroup = this.fb.group({
     id: [''],
     name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   ngOnChanges(changes: SimpleChanges): void {

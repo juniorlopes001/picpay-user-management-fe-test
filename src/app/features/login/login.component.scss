@@ -1,0 +1,21 @@
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--surface-ground);
+    padding: 1rem;
+}
+
+.field {
+    margin-bottom: 1.5rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.block {
+    display: block;
+    margin-bottom: 0.5rem;
+}
