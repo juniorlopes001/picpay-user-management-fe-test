@@ -11,6 +11,8 @@ A filosofia adotada foi: **Manutenibilidade > Complexidade**.
 * **Estilo:** SCSS (Modularizado)
 * **Dados:** RxJS & HttpClient
 * **Forms:** Typed Reactive Forms
+* **CI/CD:** GitHub Actions
+* **Commit Lint:** Husky & Lint-staged
 * 
 **Mock API:** JSON Server 
 
@@ -106,14 +108,13 @@ Organização baseada em **features** (domínio), não em tipos de arquivo. Isso
 
 ```text
 src/app/
- ├── core/              # Singletons (Interceptors, Services globais)
- ├── shared/            # UI Kit reutilizável (Loaders, Dialogs)
+ ├── core/              # Singletons (Services, Interceptors, Guards, Models)
+ ├── shared/            # UI Kit reutilizável (Header, Loading Spinner, etc)
  └── features/
-     └── users/         # Módulo isolado de usuários
-         ├── components/    # Dumb Components
-         ├── services/      # Lógica de Estado e API
-         ├── pages/         # Smart Components (Roteamento)
-         └── models/        # Interfaces estritas
+     ├── login/         # Funcionalidade de Autenticação
+     └── users/         # Funcionalidade de Usuários
+         ├── user-form/ # Componente de formulário
+         └── users-list/# Componente de listagem
 
 ```
 
@@ -125,3 +126,26 @@ Foquei em testes que garantem a confiabilidade do negócio, não apenas cobertur
 
 1. **Services:** Validam se o estado (`BehaviorSubject`) é atualizado corretamente após o retorno da API.
 2. **Componentes:** Validam se os `@Output` são emitidos corretamente ao clicar em botões críticos (Excluir/Editar).
+
+---
+
+## DevOps & Automação
+
+Adicionei uma camada de CI/CD e Qualidade de Código para tornar o projeto robusto e profissional:
+
+### 1. Husky & Git Hooks (`pre-commit`)
+Configurei o **Husky** para impedir que código quebrado seja commitado.
+- Ao tentar fazer um commit, o hook roda automaticamente `npm run test-headless`.
+- Se algum teste falhar, o commit é bloqueado.
+
+### 2. GitHub Actions (CI)
+Criei workflows automatizados em `.github/workflows/`:
+- **CI Pipeline:** A cada push ou PR para `main` ou `develop`, o GitHub instala dependências, roda os testes e faz o build do projeto para garantir integridade.
+- **Auto PR:** Ao fazer push de uma branch de `feature/`, `chore/` ou `fix/`, um Pull Request para a branch `develop` é aberto automaticamente, agilizando o fluxo de trabalho.
+
+### 3. GitFlow Simplificado
+Adotei uma estrutura de branches organizada:
+- **`main`**: Código estável/produção.
+- **`develop`**: Branch de integração.
+- **`feature/*`**: Novas funcionalidades.
+- **`chore/*`**: Tarefas de manutenção (ex: setup do husky).
