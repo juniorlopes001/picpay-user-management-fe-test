@@ -1,0 +1,10 @@
+<header class="app-header" *ngIf="authService.isLoggedIn$ | async">
+    <div class="flex align-items-center gap-3">
+        <h2>PicPay Users</h2>
+        <span class="text-sm font-light text-white" *ngIf="authService.currentUser$ | async as user">
+            Olá, {{ user.name }}
+        </span>
+    </div>
+    <p-button label="Sair" icon="pi pi-power-off" styleClass="p-button-danger p-button-text"
+        (onClick)="logout()"></p-button>
+</header>
