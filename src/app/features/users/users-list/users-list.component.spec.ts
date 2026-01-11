@@ -34,15 +34,15 @@ describe('UsersListComponent', () => {
 
     it('should emit edit event when click edit', () => {
         spyOn(component.edit, 'emit');
-        const editBtn = fixture.debugElement.query(By.css('button[aria-label="Editar usuário"]'));
-        editBtn.nativeElement.click();
+        const editBtn = fixture.debugElement.query(By.css('p-button[icon="pi pi-pencil"]'));
+        editBtn.triggerEventHandler('onClick', null);
         expect(component.edit.emit).toHaveBeenCalledWith(mockUsers[0]);
     });
 
     it('should emit delete event when click delete', () => {
         spyOn(component.delete, 'emit');
-        const deleteBtn = fixture.debugElement.query(By.css('button.danger'));
-        deleteBtn.nativeElement.click();
+        const deleteBtn = fixture.debugElement.query(By.css('p-button[icon="pi pi-trash"]'));
+        deleteBtn.triggerEventHandler('onClick', null);
         expect(component.delete.emit).toHaveBeenCalledWith('1');
     });
 });
