@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -17,6 +18,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 })
 export class UsersContainerComponent implements OnInit {
   private usersService = inject(UsersService);
+  private destroyRef = inject(DestroyRef);
 
   users$: Observable<IUser[]> = this.usersService.users$;
   searchControl = new FormControl('');
@@ -29,7 +31,8 @@ export class UsersContainerComponent implements OnInit {
 
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
-      distinctUntilChanged()
+      distinctUntilChanged(),
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe(query => {
       this.usersService.filterUsers(query || '');
     });
