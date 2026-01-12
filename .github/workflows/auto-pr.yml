@@ -1,0 +1,32 @@
+name: Auto Open Pull Request
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+      - 'chore/*'
+      - 'fix/*'
+      - 'ci/*'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  auto-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Pull Request
+        run: |
+          gh pr create \
+            --base develop \
+            --head ${{ github.ref_name }} \
+            --title "Automated PR: ${{ github.ref_name }}" \
+            --body "This PR was automatically created by GitHub Actions upon pushing to the branch **${{ github.ref_name }}**." \
+            --draft=false \
+            || echo "Pull Request already exists or failed to create (check if branch 'develop' exists)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

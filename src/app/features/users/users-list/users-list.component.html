@@ -1,24 +1,28 @@
 <div class="user-list">
-    <table>
-        <thead>
+    <p-table [value]="users" [tableStyle]="{ 'width': '100%' }">
+        <ng-template pTemplate="header">
             <tr>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Ações</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of users; trackBy: trackByFn">
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-                <td>
-                    <button (click)="edit.emit(user)" aria-label="Editar usuário">Editar</button>
-                    <button (click)="delete.emit(user.id)" aria-label="Excluir usuário" class="danger">Excluir</button>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td data-label="Nome">{{ user.name }}</td>
+                <td data-label="Email">{{ user.email }}</td>
+                <td data-label="Ações">
+                    <p-button icon="pi pi-pencil" (onClick)="edit.emit(user)"
+                        styleClass="p-button-rounded p-button-text" ariaLabel="Editar"></p-button>
+                    <p-button icon="pi pi-trash" (onClick)="delete.emit(user.id)"
+                        styleClass="p-button-rounded p-button-text p-button-danger" ariaLabel="Excluir"></p-button>
                 </td>
             </tr>
-            <tr *ngIf="users.length === 0">
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
                 <td colspan="3" class="no-data">Nenhum usuário encontrado.</td>
             </tr>
-        </tbody>
-    </table>
+        </ng-template>
+    </p-table>
 </div>

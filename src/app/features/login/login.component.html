@@ -1,0 +1,30 @@
+<div class="login-container">
+    <p-card header="Login" [style]="{ width: '360px' }">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+            <div class="field">
+                <label for="email" class="block">Email</label>
+                <input id="email" type="email" pInputText formControlName="email" placeholder="email@exemplo.com"
+                    class="w-full" />
+                <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="p-error block">
+                    Email inválido ou obrigatório.
+                </small>
+            </div>
+
+            <div class="field">
+                <label for="password" class="block">Senha</label>
+                <input id="password" type="password" pInputText formControlName="password" class="w-full" />
+                <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                    class="p-error block">
+                    Senha é obrigatória.
+                </small>
+            </div>
+
+            <div *ngIf="errorMessage" class="p-error mb-3 text-center">
+                {{ errorMessage }}
+            </div>
+
+            <p-button label="Entrar" type="submit" [loading]="isLoading" [disabled]="loginForm.invalid"
+                styleClass="w-full"></p-button>
+        </form>
+    </p-card>
+</div>
