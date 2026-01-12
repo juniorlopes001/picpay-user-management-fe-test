@@ -86,9 +86,7 @@ A separação de responsabilidades foi estrita:
 
 Nada de `subscribe` dentro dos componentes para leitura de dados.
 
-* Utilizei pipes como `switchMap` para evitar *race conditions* na busca.
-* 
-`debounceTime` e `distinctUntilChanged` foram aplicados no filtro de pesquisa para evitar spam de requisições.
+* `debounceTime` e `distinctUntilChanged` foram aplicados no filtro de pesquisa para evitar spam de requisições.
 
 
 
